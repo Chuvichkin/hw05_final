@@ -236,6 +236,12 @@ class PostsPagesTests(TestCase):
                                      kwargs={'username': self.user}))
         after_follow_num = Follow.objects.filter(author=self.user).count()
         self.assertNotEqual(before_follow_num, after_follow_num)
+        self.assertTrue(
+            Follow.objects.filter(
+                user=self.follower,
+                author=self.user
+            ).exists()
+        )
 
     def test_unfollow_author(self):
         self.authorized_follower.get(reverse('posts:profile_follow',
