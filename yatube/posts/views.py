@@ -21,7 +21,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    post_list = group.posts.select_related('author', 'group').all()
+    post_list = group.posts.select_related('author').all()
     paginator = Paginator(post_list, NUM_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -35,7 +35,7 @@ def group_posts(request, slug):
 def profile(request, username):
     profile = get_object_or_404(User, username=username)
     post_list = (
-        Post.objects.select_related("author", "group")
+        Post.objects.select_related("author")
         .filter(author=profile).all()
     )
     posts_count = post_list.count()
@@ -116,7 +116,8 @@ def add_comment(request, post_id):
 
 @login_required
 def follow_index(request):
-    post_list = Post.objects.filter(author__following__user=request.user)
+    post_list = Post.objects.select_related('author').filter(
+        author__following__user=request.user)
     paginator = Paginator(post_list, NUM_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
