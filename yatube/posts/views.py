@@ -20,8 +20,9 @@ def index(request):
 
 
 def group_posts(request, slug):
-    group = get_object_or_404(Group, slug=slug)
-    post_list = group.posts.select_related('author').all()
+    group = get_object_or_404(
+        Group.objects.prefetch_related("posts"), slug=slug)
+    post_list = group.posts.all()
     paginator = Paginator(post_list, NUM_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
