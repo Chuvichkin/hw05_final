@@ -22,6 +22,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_editable = ('text',)
     search_fields = ('text',)
     list_filter = ('created',)
+    list_display_links = None
     empty_value_display = '-пусто-'
 
 
