@@ -18,10 +18,11 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('text', 'author', 'post', 'created',)
+    list_display = ('post', 'author', 'text', 'created',)
     list_editable = ('text',)
     search_fields = ('text',)
     list_filter = ('created',)
+    list_display_links = None
     empty_value_display = '-пусто-'
 
 

@@ -25,7 +25,11 @@ SECRET_KEY = '_fy3_vs(4+t-oik@(a$k+!_97t88x=ru)=drc&z*q0efwaj9i%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '*',
+    'www.chuvichkin.pythonanywhere.com',
+    'chuvichkin.pythonanywhere.com',
+]
 
 
 # Application definition
@@ -42,6 +46,8 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'about.apps.AboutConfig',
     'sorl.thumbnail',
+    # Приложение staticfiles необходимо для работы приложения Django Debug Toolbar
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +58,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'yatube.urls'

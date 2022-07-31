@@ -43,11 +43,14 @@ def profile(request, username):
     paginator = Paginator(post_list, NUM_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    if request.user.is_authenticated:
+    """if request.user.is_authenticated:
         following = Follow.objects.filter(
             user=request.user, author=profile).exists()
     else:
-        following = False
+        following = False"""
+    # Можно такой логикой заменить верхний блок(совет ревьюера)
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user, author=profile).exists()
     context = {
         'profile': profile,
         'posts_count': posts_count,
